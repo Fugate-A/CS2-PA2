@@ -39,6 +39,10 @@ public class PA2
 		Edges = File.nextInt();
 		temp = File.nextLine();
 		
+		System.out.println();
+		System.out.printf("Source Vertex is %d", SourceVertex );
+		
+		
 		int[][] setup = UnderstandConnections( File, Edges, VerticesToMake );
 		
 		for( int i = 0; i < VerticesToMake; i++ )
