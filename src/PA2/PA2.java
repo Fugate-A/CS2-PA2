@@ -82,9 +82,20 @@ public class PA2
 		}
 		
 		System.out.println();
-		System.out.println( AllVertices[0].Edges.length );
 		
+		for( int i = 0; i < Edges; i++ )
+		{
+			AllEdges[i].VA = AllVertices[ File2.nextInt() - 1 ];
+			AllEdges[i].VB = AllVertices[ File2.nextInt() - 1 ];
+			String skip = File2.nextLine();
+		}
 		
+		for( int i = 0; i < 9; i++ )
+		{
+			System.out.println();
+			System.out.println( AllEdges[i].VA.label );
+			System.out.println( AllEdges[i].VB.label );
+		}
 	}
 
 	private static int[][] UnderstandConnections( Scanner file, int noe, int nov )
