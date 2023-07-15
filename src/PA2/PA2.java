@@ -126,6 +126,64 @@ public class PA2
 			System.out.println();
 		}
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		//dijkstras
+		
+		
+		
+		
+		
+		
+		
+        try
+        {
+            FileWriter results = new FileWriter("cop3503-asn2-output-Fugate-Andrew.txt");
+            
+            for( int i = 0; i < VerticesToMake + 1; i++ )
+            {
+            	if( i == 0 )
+            	{
+            		results.write("" + VerticesToMake );
+            		results.write("\ntest new line");
+            	}
+            	
+            	else
+            	{
+            		results.write("\ntest for @ " + i);
+            	}
+            }
+            
+            results.close();
+            
+        }
+  
+        catch (Exception e)
+        {
+            e.getStackTrace();
+        }
+        
+        
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	private static int[][] UnderstandConnections( Scanner file, int noe, int nov )
