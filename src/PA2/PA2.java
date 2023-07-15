@@ -96,6 +96,36 @@ public class PA2
 			System.out.println( AllEdges[i].VA.label );
 			System.out.println( AllEdges[i].VB.label );
 		}
+		
+		for( int i = 0; i < Edges; i++ )
+		{
+			VertexStructure A = AllEdges[i].VA;
+			VertexStructure B = AllEdges[i].VB;
+			
+			A.Edges[A.EdgeIndexVar] = AllEdges[i];
+			A.EdgeIndexVar++;
+			
+			B.Edges[B.EdgeIndexVar] = AllEdges[i];
+			B.EdgeIndexVar++;
+			
+		}
+		
+		for( int i = 0; i < VerticesToMake; i++ )
+		{
+			System.out.println();
+			System.out.println( AllVertices[i].label );
+			System.out.println( AllVertices[i].visited );
+			System.out.println( AllVertices[i].EdgeCount );
+			System.out.println( AllVertices[i].EdgeIndexVar );
+			
+			for( int j = 0; j < AllVertices[i].EdgeIndexVar; j++ )
+			{
+				System.out.printf("\nVA: %d", AllVertices[i].Edges[j].VA.label );
+				System.out.printf("\nVb: %d", AllVertices[i].Edges[j].VB.label );
+			}
+			System.out.println();
+		}
+		
 	}
 
 	private static int[][] UnderstandConnections( Scanner file, int noe, int nov )
