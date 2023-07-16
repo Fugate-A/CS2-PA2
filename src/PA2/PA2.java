@@ -175,31 +175,35 @@ public class PA2
 		
 		//----------------------------------------------------------------------------------------------------------------------------------------------		
 		
-        try
-        {
-            FileWriter results = new FileWriter("cop3503-asn2-output-Fugate-Andrew.txt");
-            
-            for( int i = 0; i < VerticesToMake + 1; i++ )
-            {
-            	if( i == 0 )
-            	{
-            		results.write("" + VerticesToMake + "\n" );
-            	}
-            	
-            	else
-            	{
-            		results.write( OutputTable[i-1][0] + " " + OutputTable[i-1][1] + " " + OutputTable[i-1][2] + "\n" );
-            	}
-            }
-            
-            results.close();
-            
-        }
-  
-        catch (Exception e)
-        {
-            e.getStackTrace();
-        }
+       WriteToFile( OutputTable, VerticesToMake );
+	}
+
+	private static void WriteToFile(int[][] OutputTable, int VerticesToMake)
+	{
+		 try
+	        {
+	            FileWriter results = new FileWriter("cop3503-asn2-output-Fugate-Andrew.txt");
+	            
+	            for( int i = 0; i < VerticesToMake + 1; i++ )
+	            {
+	            	if( i == 0 )
+	            	{
+	            		results.write("" + VerticesToMake + "\n" );
+	            	}
+	            	
+	            	else
+	            	{
+	            		results.write( OutputTable[i-1][0] + " " + OutputTable[i-1][1] + " " + OutputTable[i-1][2] + "\n" );
+	            	}
+	            }
+	            
+	            results.close();
+	        }
+	  
+	        catch (Exception e)
+	        {
+	            e.getStackTrace();
+	        }
 	}
 
 	private static void PrintTable( int[][] out, int nov )
