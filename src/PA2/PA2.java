@@ -126,7 +126,16 @@ public class PA2
 			System.out.println();
 		}
 		
+		int[][] OutputTable = new int[VerticesToMake][3];
 		
+		for( int i = 0; i < VerticesToMake; i++ )
+		{
+			OutputTable[i][0] = AllVertices[i].label; //vertex:
+			OutputTable[i][1] = Integer.MAX_VALUE;	//cost:
+			OutputTable[i][2] = 0;	//from vertex:
+		}
+		
+		PrintTable( OutputTable, VerticesToMake );
 		
 		
 		
@@ -168,22 +177,18 @@ public class PA2
         {
             e.getStackTrace();
         }
-        
-        
+	}
+
+	private static void PrintTable( int[][] out, int nov )
+	{
 		
+		System.out.println();
+		System.out.printf("Vertex: Cost: From:");
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		for( int i = 0; i < nov; i++ )
+		{
+			System.out.printf("\n%d %d %d", out[i][0], out[i][1], out[i][2]  );
+		}
 	}
 
 	private static int[][] UnderstandConnections( Scanner file, int noe, int nov )
