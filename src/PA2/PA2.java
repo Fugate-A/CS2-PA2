@@ -154,28 +154,57 @@ public class PA2
 				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label - 1 ][2] = AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label;		
 			}
 			
-			else if( AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label != AllVertices[ SourceVertex - 1 ].label && AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.visited == false )
+			else //if( AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label != AllVertices[ SourceVertex - 1 ].label && AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.visited == false )
 			{
 				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label - 1 ][1] = AllVertices[ SourceVertex - 1 ].Edges[ i ].weight;
 				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label - 1 ][2] = AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label;
 			}
 			
-			else
-			{
-				
-			}
-			
 			PrintTable(OutputTable, VerticesToMake);
 		}
 		
-		
-		
-		
-		
+		for( int i = 0; i < VerticesToMake-1; i++ )
+		{
+			int NextVert = SearchForShortestPath( AllVertices, OutputTable, VerticesToMake );
+			
+			if( NextVert != -1 )
+			{
+				AllVertices[ NextVert - 1 ].visited = true;
+				System.out.printf("\nItteration %d:\nNext Vert is %d", i+1, NextVert);
+			}
+			
+			else
+			{
+				System.out.println("\nskipping this vert becuase it doesnt have a current cost...ie not accesible rn ");
+			}
+			
+		}
 		
 		//----------------------------------------------------------------------------------------------------------------------------------------------		
 		
        WriteToFile( OutputTable, VerticesToMake );
+	}
+
+	private static int SearchForShortestPath( VertexStructure[] verts, int[][] out, int nov )
+	{
+		int CSP = Integer.MAX_VALUE;
+		int NTR = -1;
+		
+		for( int i = 0; i < nov; i++ )
+		{
+			if( verts[i].visited == false )
+			{
+				if( out[ verts[i].label - 1 ][1] < CSP &&  out[ verts[i].label - 1 ][1] >= 0 )
+				{
+					CSP = out[ verts[i].label - 1 ][1];
+					NTR = verts[i].label;
+					//System.out.println(CSP);
+				}
+			}
+		}
+		
+		
+		return NTR;
 	}
 
 	private static void WriteToFile(int[][] OutputTable, int VerticesToMake)
