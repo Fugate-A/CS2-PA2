@@ -1,8 +1,7 @@
 6
-test new line
-test for @ 1
-test for @ 2
-test for @ 3
-test for @ 4
-test for @ 5
-test for @ 6
+1 3 5
+2 8 5
+3 2147483647 0
+4 5 5
+5 -1 -1
+6 7 5

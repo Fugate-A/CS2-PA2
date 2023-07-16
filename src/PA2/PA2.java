@@ -148,12 +148,10 @@ public class PA2
 		
 		for( int i = 0; i < AllVertices[ SourceVertex - 1 ].EdgeCount; i++  )
 		{
-			
 			if( AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label != AllVertices[ SourceVertex - 1 ].label && AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.visited == false )
 			{
 				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label - 1 ][1] = AllVertices[ SourceVertex - 1 ].Edges[ i ].weight;
-				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label - 1 ][2] = AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label;
-				
+				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label - 1 ][2] = AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label;		
 			}
 			
 			else if( AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label != AllVertices[ SourceVertex - 1 ].label && AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.visited == false )
@@ -185,13 +183,12 @@ public class PA2
             {
             	if( i == 0 )
             	{
-            		results.write("" + VerticesToMake );
-            		results.write("\ntest new line");
+            		results.write("" + VerticesToMake + "\n" );
             	}
             	
             	else
             	{
-            		results.write("\ntest for @ " + i);
+            		results.write( OutputTable[i-1][0] + " " + OutputTable[i-1][1] + " " + OutputTable[i-1][2] + "\n" );
             	}
             }
             
@@ -209,11 +206,11 @@ public class PA2
 	{
 		
 		System.out.println();
-		System.out.printf("Vertex: Cost: From:");
+		System.out.printf("\nVertex: Cost: From:");
 		
 		for( int i = 0; i < nov; i++ )
 		{
-			System.out.printf("\n%d %d %d", out[i][0], out[i][1], out[i][2]  );
+			System.out.printf("\n%d %d %d", out[i][0], out[i][1], out[i][2] );
 		}
 	}
 
