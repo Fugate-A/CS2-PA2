@@ -17,6 +17,8 @@ public class PA2
 		int SourceVertex = 0;
 		int Edges = 0;
 		
+		Integer MAX = Integer.MAX_VALUE;
+		
 		String temp = null;
 		
 		File FileIn = new File("cop3503-asn2-input.txt");
@@ -121,7 +123,7 @@ public class PA2
 			for( int j = 0; j < AllVertices[i].EdgeIndexVar; j++ )
 			{
 				System.out.printf("\nVA: %d", AllVertices[i].Edges[j].VA.label );
-				System.out.printf("\nVb: %d", AllVertices[i].Edges[j].VB.label );
+				System.out.printf("\nVB: %d", AllVertices[i].Edges[j].VB.label );
 			}
 			System.out.println();
 		}
@@ -131,25 +133,49 @@ public class PA2
 		for( int i = 0; i < VerticesToMake; i++ )
 		{
 			OutputTable[i][0] = AllVertices[i].label; //vertex:
-			OutputTable[i][1] = Integer.MAX_VALUE;	//cost:
+			OutputTable[i][1] = MAX;	//cost:
 			OutputTable[i][2] = 0;	//from vertex:
 		}
 		
 		PrintTable( OutputTable, VerticesToMake );
 		
-		
-		
-		
-		
-		
-		
+		//----------------------------------------------------------------------------------------------------------------------------------------------
 		//dijkstras
 		
+		AllVertices[ SourceVertex - 1 ].visited = true;
+		OutputTable[ SourceVertex - 1 ][1] = -1;
+		OutputTable[ SourceVertex - 1 ][2] = -1;
+		
+		for( int i = 0; i < AllVertices[ SourceVertex - 1 ].EdgeCount; i++  )
+		{
+			
+			if( AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label != AllVertices[ SourceVertex - 1 ].label && AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.visited == false )
+			{
+				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label - 1 ][1] = AllVertices[ SourceVertex - 1 ].Edges[ i ].weight;
+				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label - 1 ][2] = AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label;
+				
+			}
+			
+			else if( AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label != AllVertices[ SourceVertex - 1 ].label && AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.visited == false )
+			{
+				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label - 1 ][1] = AllVertices[ SourceVertex - 1 ].Edges[ i ].weight;
+				OutputTable[ AllVertices[ SourceVertex - 1 ].Edges[ i ].VB.label - 1 ][2] = AllVertices[ SourceVertex - 1 ].Edges[ i ].VA.label;
+			}
+			
+			else
+			{
+				
+			}
+			
+			PrintTable(OutputTable, VerticesToMake);
+		}
 		
 		
 		
 		
 		
+		
+		//----------------------------------------------------------------------------------------------------------------------------------------------		
 		
         try
         {
