@@ -133,32 +133,38 @@ public class PA2
 			PrintTable(OutputTable, VerticesToMake);
 		}
 		
+		
+		System.out.printf("\n\n\n\n\nAFTER SOURCE EVALUATION\n\n\n\n");
+		
+		
 		for( int i = 0; i < VerticesToMake - 1; i++ )
 		{
-			int NextVert = SearchForShortestPath( AllVertices, OutputTable, VerticesToMake );
+			
+			int NextVert = SearchForShortestPath( AllVertices, OutputTable, VerticesToMake );			
 			
 			AllVertices[ NextVert - 1 ].visited = true;
 			
 			VertexStructure VisitingVert = AllVertices[ NextVert - 1 ];
 			VertexStructure OpposingVert = null; 
+			int LoopCount = VisitingVert.EdgeCount;
 			
-			for( int j = 0; j < VisitingVert.EdgeCount; j++ )
+			for( int j = 0; j < LoopCount ; j++ )
 			{
 				EdgeStructure CheckEdge = VisitingVert.Edges[ j ];
 				
-				if( CheckEdge.VA != VisitingVert && CheckEdge.VA.visited == false )
+				if( CheckEdge.VA != VisitingVert /*&& CheckEdge.VA.visited == false*/ )
 				{
 					OpposingVert = VisitingVert.Edges[ j ].VA;
 				}
 				
-				else if( CheckEdge.VB != VisitingVert && CheckEdge.VB.visited == false )
+				else if( CheckEdge.VB != VisitingVert /*&& CheckEdge.VB.visited == false*/ )
 				{
 					OpposingVert = VisitingVert.Edges[ j ].VB;
 				}
 				
 				else
 				{
-					break;
+					//break;
 				}
 				
 				if( CheckEdge.weight + OutputTable[VisitingVert.label - 1][1] < OutputTable[OpposingVert.label - 1][1] && CheckEdge.weight >= 0 )
@@ -194,6 +200,7 @@ public class PA2
 			{
 				if( out[ verts[i].label - 1 ][1] < CSP &&  out[ verts[i].label - 1 ][1] >= 0 )
 				{
+					System.out.printf("\nShowing vertex %d has the lowest path of %d on check %d\nvertex %d's cost is %d", verts[i].label, out[ verts[i].label - 1 ][1], i+1,verts[i].label, out[verts[i].label-1][1]);
 					CSP = out[ verts[i].label - 1 ][1];
 					NTR = verts[i].label;
 				}
@@ -312,5 +319,3 @@ public class PA2
 //
 
 //
-
-
