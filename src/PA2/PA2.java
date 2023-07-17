@@ -53,9 +53,6 @@ public class PA2
 		temp = File.nextLine();
 		Edges = File.nextInt();
 		temp = File.nextLine();
-				
-		System.out.println();
-		System.out.printf("Source Vertex is %d", SourceVertex );
 		
 		int[][] setup = UnderstandConnections( File, Edges, VerticesToMake );
 		
@@ -63,8 +60,6 @@ public class PA2
 		
 		for( int i = 0; i < VerticesToMake; i++ )
 		{
-			System.out.println();
-			System.out.printf("Vertex %d has %d edges leaving it", i+1, setup[i][0] );
 			AllVertices[i] = new VertexStructure( i+1, setup[i][0] );
 		}
 		
@@ -72,31 +67,21 @@ public class PA2
 		
 		for( int i = 0; i < Edges; i++ )
 		{
-			System.out.println();
-			System.out.printf("Edge %d has a weight of %d", i+1, hold[i][0] );
 			AllEdges[i] = new EdgeStructure( hold[i][0] );
 		}
 		
 		String File2Garbage = null;
+		
 		for( int g = 0; g < 3; g++ )
 		{
 			File2Garbage = File2.nextLine();
 		}
-		
-		System.out.println();
 		
 		for( int i = 0; i < Edges; i++ )
 		{
 			AllEdges[i].VA = AllVertices[ File2.nextInt() - 1 ];
 			AllEdges[i].VB = AllVertices[ File2.nextInt() - 1 ];
 			String skip = File2.nextLine();
-		}
-		
-		for( int i = 0; i < 9; i++ )
-		{
-			System.out.println();
-			System.out.println( AllEdges[i].VA.label );
-			System.out.println( AllEdges[i].VB.label );
 		}
 		
 		for( int i = 0; i < Edges; i++ )
@@ -109,23 +94,6 @@ public class PA2
 			
 			B.Edges[B.EdgeIndexVar] = AllEdges[i];
 			B.EdgeIndexVar++;
-			
-		}
-		
-		for( int i = 0; i < VerticesToMake; i++ )
-		{
-			System.out.println();
-			System.out.println( AllVertices[i].label );
-			System.out.println( AllVertices[i].visited );
-			System.out.println( AllVertices[i].EdgeCount );
-			System.out.println( AllVertices[i].EdgeIndexVar );
-			
-			for( int j = 0; j < AllVertices[i].EdgeIndexVar; j++ )
-			{
-				System.out.printf("\nVA: %d", AllVertices[i].Edges[j].VA.label );
-				System.out.printf("\nVB: %d", AllVertices[i].Edges[j].VB.label );
-			}
-			System.out.println();
 		}
 		
 		int[][] OutputTable = new int[VerticesToMake][3];
@@ -136,8 +104,8 @@ public class PA2
 			OutputTable[i][1] = MAX;	//cost:
 			OutputTable[i][2] = 0;	//from vertex:
 		}
-		
-		PrintTable( OutputTable, VerticesToMake );
+
+		PrintTable(OutputTable, VerticesToMake);
 		
 		//----------------------------------------------------------------------------------------------------------------------------------------------
 		//dijkstras
@@ -145,6 +113,8 @@ public class PA2
 		AllVertices[ SourceVertex - 1 ].visited = true;
 		OutputTable[ SourceVertex - 1 ][1] = -1;
 		OutputTable[ SourceVertex - 1 ][2] = -1;
+		
+		PrintTable(OutputTable, VerticesToMake);
 		
 		for( int i = 0; i < AllVertices[ SourceVertex - 1 ].EdgeCount; i++  )
 		{
@@ -163,16 +133,11 @@ public class PA2
 			PrintTable(OutputTable, VerticesToMake);
 		}
 		
-		
-		
-		
-		
-		
-		
-		
 		for( int i = 0; i < VerticesToMake - 1; i++ )
 		{
 			int NextVert = SearchForShortestPath( AllVertices, OutputTable, VerticesToMake );
+			
+			AllVertices[ NextVert - 1 ].visited = true;
 			
 			VertexStructure VisitingVert = AllVertices[ NextVert - 1 ];
 			VertexStructure OpposingVert = null; 
@@ -181,38 +146,41 @@ public class PA2
 			{
 				EdgeStructure CheckEdge = VisitingVert.Edges[ j ];
 				
-				if( CheckEdge.VA != VisitingVert )
+				if( CheckEdge.VA != VisitingVert && CheckEdge.VA.visited == false )
 				{
 					OpposingVert = VisitingVert.Edges[ j ].VA;
 				}
 				
-				else
+				else if( CheckEdge.VB != VisitingVert && CheckEdge.VB.visited == false )
 				{
 					OpposingVert = VisitingVert.Edges[ j ].VB;
 				}
 				
-				if( CheckEdge.weight < OutputTable[OpposingVert.label - 1][1] && CheckEdge.weight >= 0 )
+				else
+				{
+					break;
+				}
+				
+				if( CheckEdge.weight + OutputTable[VisitingVert.label - 1][1] < OutputTable[OpposingVert.label - 1][1] && CheckEdge.weight >= 0 )
 				{
 					OutputTable[OpposingVert.label - 1][1] = CheckEdge.weight + OutputTable[VisitingVert.label - 1][1];
 					OutputTable[OpposingVert.label - 1][2] = VisitingVert.label;
 				}
 				
+				else
+				{
+					System.out.print("\nEvaluating edge of weight " + CheckEdge.weight + " with VA " + CheckEdge.VA.label + " and VB " + CheckEdge.VB.label );
+				}
+				
+				AllVertices[ NextVert - 1 ].visited = true;
+				
+				PrintTable(OutputTable, VerticesToMake);
 			}
-			
 		}
 		
 		//----------------------------------------------------------------------------------------------------------------------------------------------		
 		
        WriteToFile( OutputTable, VerticesToMake );
-	}
-
-	private static int[][] SwapPaths(int[][] out, VertexStructure[] verts, int AtVert)
-	{
-		
-		
-		
-		
-		return out;
 	}
 
 	private static int SearchForShortestPath( VertexStructure[] verts, int[][] out, int nov )
@@ -228,12 +196,9 @@ public class PA2
 				{
 					CSP = out[ verts[i].label - 1 ][1];
 					NTR = verts[i].label;
-					//System.out.println(CSP);
 				}
 			}
-		}
-		
-		
+		}		
 		return NTR;
 	}
 
@@ -341,7 +306,7 @@ public class PA2
 		}
 
 	}
-	
+
 }
 
 //
