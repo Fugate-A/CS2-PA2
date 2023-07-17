@@ -163,19 +163,40 @@ public class PA2
 			PrintTable(OutputTable, VerticesToMake);
 		}
 		
-		for( int i = 0; i < VerticesToMake-1; i++ )
+		
+		
+		
+		
+		
+		
+		
+		for( int i = 0; i < VerticesToMake - 1; i++ )
 		{
 			int NextVert = SearchForShortestPath( AllVertices, OutputTable, VerticesToMake );
 			
-			if( NextVert != -1 )
-			{
-				AllVertices[ NextVert - 1 ].visited = true;
-				System.out.printf("\nItteration %d:\nNext Vert is %d", i+1, NextVert);
-			}
+			VertexStructure VisitingVert = AllVertices[ NextVert - 1 ];
+			VertexStructure OpposingVert = null; 
 			
-			else
+			for( int j = 0; j < VisitingVert.EdgeCount; j++ )
 			{
-				System.out.println("\nskipping this vert becuase it doesnt have a current cost...ie not accesible rn ");
+				EdgeStructure CheckEdge = VisitingVert.Edges[ j ];
+				
+				if( CheckEdge.VA != VisitingVert )
+				{
+					OpposingVert = VisitingVert.Edges[ j ].VA;
+				}
+				
+				else
+				{
+					OpposingVert = VisitingVert.Edges[ j ].VB;
+				}
+				
+				if( CheckEdge.weight < OutputTable[OpposingVert.label - 1][1] && CheckEdge.weight >= 0 )
+				{
+					OutputTable[OpposingVert.label - 1][1] = CheckEdge.weight + OutputTable[VisitingVert.label - 1][1];
+					OutputTable[OpposingVert.label - 1][2] = VisitingVert.label;
+				}
+				
 			}
 			
 		}
@@ -183,6 +204,15 @@ public class PA2
 		//----------------------------------------------------------------------------------------------------------------------------------------------		
 		
        WriteToFile( OutputTable, VerticesToMake );
+	}
+
+	private static int[][] SwapPaths(int[][] out, VertexStructure[] verts, int AtVert)
+	{
+		
+		
+		
+		
+		return out;
 	}
 
 	private static int SearchForShortestPath( VertexStructure[] verts, int[][] out, int nov )
